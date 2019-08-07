@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sheetJS </title>
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+</head>
+<body>
+    <h1>sheetJs 文件导出 </h1>
+    <script type="text/javascript">
+        window.onload=function () {
+            var filename = "file.xlsx"; //文件名称
+            var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]];  //数据，一定注意需要时二维数组
+            var ws_name = "Sheet1"; //Excel第一个sheet的名称
+            var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, ws_name);  //将数据添加到工作薄
+            XLSX.writeFile(wb, filename); //导出Excel
+        }
+    </script>
+
+</body>
+</html>

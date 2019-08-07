@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+</head>
+
+<body>
+<button onclick="downloadExl(jsono)">导出</button>
+<script type="text/javascript">
+    window.onload=function () {
+        var titleMap = {};
+        titleMap.stat_month = "统计月份";
+        titleMap.frame_num = "框架号";
+        titleMap.contract_num = "合同号";
+        titleMap.channel_name = "渠道";
+        titleMap.channel_id = "渠道ID";
+        titleMap.user_code = "工号";
+        titleMap.user_name = "网销销售";
+        titleMap.sign_company_name = "签约公司";
+        titleMap.sign_method = "签约方式";
+        titleMap.brand_sign_amt = "品牌签约金额";
+        titleMap.payment_apply_bill_num = "回款申请单号";
+        titleMap.payment_amt = "回款金额";
+        titleMap.payment_date = "回款时间";
+        titleMap.is_out_acctdate = "是否超期";
+        titleMap.outdate_payment_amt = "超期金额";
+        titleMap.indate_amt = "未超期金额";
+        titleMap.outdatePaymentCommissionAmt = "超期业绩金额";
+        titleMap.indatePaymentCommissionAmt = "未超期业绩金额";
+        titleMap.real_commission_amt = "车商汇回款业绩金额";
+        var jsondata=[
+            {"id":269090,"stat_month":"201906","frame_id":0,"frame_num":null,"contract_id":1234456,"contract_num":"SW-JXS-201906-23271","channel_id":"16","user_id":"00007704","user_code":"8618","user_name":"吴业茂","join_date":"2016-08-02 00:00:00","job_status":"01","dept_id":"00000195","sign_company_id":95623,"sign_method":"01","brand_sign_amt":67770.000000,"payment_apply_bill_id":"SK20190629018354|1234456","payment_apply_bill_num":"SK20190629018354","payment_amt":67770.000000,"payment_date":"2019-06-29 00:00:00","real_sign_count":538,"is_out_acctdate":0,"outdate_payment_amt":0.000000,"indate_amt":67770.000000,"base_ratio":0.000300,"sign_count_ratio":3.000000,"renew_disconnect_ratio":1.000000,"real_commission_amt":60.993000,"real_commission_amt_old":null,"create_time":"2019-07-24 14:47:54","modify_time":"2019-07-24 14:47:54","begin_date":"2019-07-02 00:00:00","frame_deluxe_published_count":0,"remark":null,"commission_policy":"2019","ics_split_contract_amt":null,"zhwx_split_contract_amt":null,"znzt_split_contract_amt":null,"ics_split_ratio":null,"zhwx_split_ratio":null,"znzt_split_ratio":null,"zhwx_real_commission_amt":null,"znzt_real_commission_amt":null,"outdatePaymentCommissionAmt":0.000000,"indatePaymentCommissionAmt":67770.000000,"sign_company_name":null,"channel_name":"比亚迪"},
+            {"id":253120,"stat_month":"201906","frame_id":2220,"frame_num":"JXS_201609_0006","contract_id":609898,"contract_num":"SW-JXS-201705-01038","channel_id":"48","user_id":"00012001","user_code":"12212","user_name":"夏勇","join_date":"2018-09-25 00:00:00","job_status":"01","dept_id":"00000195","sign_company_id":36201,"sign_method":"02","brand_sign_amt":29891566.000000,"payment_apply_bill_id":"HZ59510536131236|609898","payment_apply_bill_num":"HZ59510536131236","payment_amt":11569.000000,"payment_date":"2019-06-29 00:00:00","real_sign_count":318,"is_out_acctdate":0,"outdate_payment_amt":0.000000,"indate_amt":11569.000000,"base_ratio":0.000300,"sign_count_ratio":2.000000,"renew_disconnect_ratio":1.000000,"real_commission_amt":8.329680,"real_commission_amt_old":null,"create_time":"2019-07-24 14:13:47","modify_time":"2019-07-24 14:13:47","begin_date":"2016-09-14 00:00:00","frame_deluxe_published_count":0,"remark":null,"commission_policy":"2019","ics_split_contract_amt":null,"zhwx_split_contract_amt":null,"znzt_split_contract_amt":null,"ics_split_ratio":null,"zhwx_split_ratio":null,"znzt_split_ratio":null,"zhwx_real_commission_amt":null,"znzt_real_commission_amt":null,"outdatePaymentCommissionAmt":0.000000,"indatePaymentCommissionAmt":11569.000000,"sign_company_name":"广汽菲亚特克莱斯勒汽车销售有限公司","channel_name":"广汽菲克"}
+            ];
+
+        var keys = Object.keys(titleMap);
+        var sheet=[];
+        var title= Object.values(titleMap);
+        sheet.push(title);
+        if(jsondata.length>0){
+            jsondata.map(function (val,index) {
+                var row=[];
+                keys.map(function (key) {
+                   var cell= val[key];
+                   row.push(cell);
+                })
+                sheet.push(row);
+            })
+        }
+        console.log(sheet);
+        var filename = "file.xlsx"; //文件名称
+        var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]];  //数据，一定注意需要时二维数组
+        var ws_name = "Sheet1"; //Excel第一个sheet的名称
+        var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(sheet);
+        XLSX.utils.book_append_sheet(wb, ws, ws_name);  //将数据添加到工作薄
+        XLSX.writeFile(wb, filename); //导出Excel
+    }
+</script>
+
+<script type="text/javascript">
+    //解析EXcel文件
+    const wb= xlsx.read(file.buffer, {type: "buffer"});
+    const wsname = wb.SheetNames[0];
+    const ws = wb.Sheets[wsname];
+    const data = xlsx.utils.sheet_to_csv(ws);
+</script>
+
+<!--&lt;!&ndash;-->
+        <!--以下a标签不需要内容-->
+    <!--&ndash;&gt;-->
+<!--<a href="" download="这里是下载的文件名.xlsx" id="hf"></a>-->
+<!--<script>-->
+    <!--var jsono = [{ //测试数据-->
+        <!--"保质期临期预警(天)": "adventLifecycle",-->
+        <!--"商品标题": "title",-->
+        <!--"建议零售价": "defaultPrice",-->
+        <!--"高(cm)": "height",-->
+        <!--"商品描述": "Description",-->
+        <!--"保质期禁售(天)": "lockupLifecycle",-->
+        <!--"商品名称": "skuName",-->
+        <!--"商品简介": "brief",-->
+        <!--"宽(cm)": "width",-->
+        <!--"阿达": "asdz",-->
+        <!--"货号": "goodsNo",-->
+        <!--"商品条码": "skuNo",-->
+        <!--"商品品牌": "brand",-->
+        <!--"净容积(cm^3)": "netVolume",-->
+        <!--"是否保质期管理": "isShelfLifeMgmt",-->
+        <!--"是否串号管理": "isSNMgmt",-->
+        <!--"商品颜色": "color",-->
+        <!--"尺码": "size",-->
+        <!--"是否批次管理": "isBatchMgmt",-->
+        <!--"商品编号": "skuCode",-->
+        <!--"商品简称": "shortName",-->
+        <!--"毛重(g)": "grossWeight",-->
+        <!--"长(cm)": "length",-->
+        <!--"英文名称": "englishName",-->
+        <!--"净重(g)": "netWeight",-->
+        <!--"商品分类": "categoryId",-->
+        <!--"这里超过了": 1111.0,-->
+        <!--"保质期(天)": "expDate"-->
+    <!--}];-->
+    <!--var tmpDown; //导出的二进制对象-->
+    <!--function downloadExl(json, type) {-->
+        <!--var tmpdata = json[0];-->
+        <!--json.unshift({});-->
+        <!--var keyMap = []; //获取keys-->
+        <!--//keyMap =Object.keys(json[0]);-->
+        <!--for (var k in tmpdata) {-->
+            <!--keyMap.push(k);-->
+            <!--json[0][k] = k;-->
+        <!--}-->
+        <!--var tmpdata = [];//用来保存转换好的json-->
+        <!--json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {-->
+            <!--v: v[k],-->
+            <!--position: (j > 25 ? getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)-->
+        <!--}))).reduce((prev, next) => prev.concat(next)).forEach((v, i) => tmpdata[v.position] = {-->
+            <!--v: v.v-->
+        <!--});-->
+        <!--var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10-->
+        <!--tmpdata["B1"].s = { font: { sz: 14, bold: true, color: { rgb: "FFFFAA00" } }, fill: { bgColor: { indexed: 64 }, fgColor: { rgb: "FFFF00" } } };//<====设置xlsx单元格样式-->
+
+        <!--var tmpWB = {-->
+            <!--SheetNames: ['mySheet'], //保存的表标题-->
+            <!--Sheets: {-->
+                <!--'mySheet': Object.assign({},-->
+                    <!--tmpdata, //内容-->
+                    <!--{-->
+                        <!--'!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] //设置填充区域-->
+                    <!--})-->
+            <!--}-->
+        <!--};-->
+        <!--tmpDown = new Blob([s2ab(XLSX.write(tmpWB,-->
+            <!--{bookType: (type == undefined ? 'xlsx':type),bookSST: false, type: 'binary'}//这里的数据是用来定义导出的格式类型-->
+        <!--))], {-->
+            <!--type: ""-->
+        <!--}); //创建二进制对象写入转换好的字节流-->
+        <!--var href = URL.createObjectURL(tmpDown); //创建对象超链接-->
+        <!--document.getElementById("hf").href = href; //绑定a标签-->
+        <!--document.getElementById("hf").click(); //模拟点击实现下载-->
+        <!--setTimeout(function() { //延时释放-->
+            <!--URL.revokeObjectURL(tmpDown); //用URL.revokeObjectURL()来释放这个object URL-->
+        <!--}, 100);-->
+    <!--}-->
+
+    <!--function s2ab(s) { //字符串转字符流-->
+        <!--var buf = new ArrayBuffer(s.length);-->
+        <!--var view = new Uint8Array(buf);-->
+        <!--for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;-->
+        <!--return buf;-->
+    <!--}-->
+    <!--// 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。-->
+    <!--function getCharCol(n) {-->
+        <!--let temCol = '',-->
+            <!--s = '',-->
+            <!--m = 0-->
+        <!--while (n > 0) {-->
+            <!--m = n % 26 + 1-->
+            <!--s = String.fromCharCode(m + 64) + s-->
+            <!--n = (n - m) / 26-->
+        <!--}-->
+        <!--return s-->
+    <!--}-->
+<!--</script>-->
+</body>
+
+</html>

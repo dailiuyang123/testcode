@@ -1,6 +1,8 @@
 package com.mycode.testcode.controller;
 
 import com.mycode.testcode.entity.User;
+import com.mycode.testcode.result.GlobalErrorInfoEnum;
+import com.mycode.testcode.result.GlobalErrorInfoException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,10 @@ public class UserController {
 
     @RequestMapping(value = "/data",method = RequestMethod.GET)
     @ResponseBody
-    public List<User> data(){
+    public List<User> data() throws GlobalErrorInfoException {
+        if(true){
+            throw new GlobalErrorInfoException(GlobalErrorInfoEnum.NOT_FOUND);
+        }
         User user=new User();
         user.setKey("2");
         user.setGender("女");
@@ -38,5 +43,7 @@ public class UserController {
         users.add(user);
         return users;
     }
+
+
 
 }
